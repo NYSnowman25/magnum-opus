@@ -18,8 +18,8 @@ namespace StatusBarKind {
     export const crabBar = StatusBarKind.create()
 }
 sprites.onOverlap(SpriteKind.blondeProjectile, SpriteKind.gunThug_1, function (sprite, otherSprite) {
-    thugBar1.value += -34
     sprite.destroy()
+    thugBar1.value += -34
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (0 < jump) {
@@ -33,13 +33,13 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     }
 })
 sprites.onOverlap(SpriteKind.blondeProjectile, SpriteKind.gunThug_2, function (sprite, otherSprite) {
-    thugBar2.value += -34
     sprite.destroy()
+    thugBar2.value += -34
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (info.player2.score() > 0) {
-        if (statusbar.value < 100) {
-            statusbar.value = 100
+        if (statusbar.value <= 100) {
+            statusbar.value += 100
             info.player2.changeScoreBy(-1)
         }
     }
@@ -219,13 +219,16 @@ function monologue () {
     game.showLongText("So you've finally caught up to me.", DialogLayout.Top)
     game.showLongText("And you've managed to get past my guards.", DialogLayout.Top)
     game.showLongText("No matter, because you won't get past this!", DialogLayout.Top)
-    game.showLongText("Say hello to the Mega Crav, with a V!", DialogLayout.Top)
+    game.showLongText("Say hello to the Mega Crab mark V!", DialogLayout.Top)
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile24`, function (sprite, location) {
     level2()
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, location) {
     level3()
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile13`, function (sprite, location) {
+    getOutOfCar()
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (facing == 0) {
@@ -238,13 +241,13 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . d d d d . . . . . . 
             . . . d d d d . . . . . . 
             . . . . d . . . . 4 4 4 4 
-            . 6 6 9 d 9 6 6 6 6 d . . 
-            . 6 6 6 9 6 6 . . . 4 . . 
-            . 6 6 6 9 6 6 . . . . . . 
-            . d 6 6 6 6 6 . . . . . . 
-            . . 6 6 6 6 6 . . . . . . 
-            . . 6 6 . 6 6 . . . . . . 
-            . . 6 6 . 6 6 . . . . . . 
+            . 2 2 4 d 4 2 2 2 2 d . . 
+            . 2 2 2 4 2 2 . . . 4 . . 
+            . 2 2 2 2 2 2 . . . . . . 
+            . d 2 2 2 2 2 . . . . . . 
+            . . 2 2 2 2 2 . . . . . . 
+            . . 2 2 . 2 2 . . . . . . 
+            . . 2 2 . 2 2 . . . . . . 
             . . f f . f f . . . . . . 
             `)
         if (0 < info.score()) {
@@ -283,13 +286,13 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . d d d d . . . . 
             . . . . . d d d d . . . . 
             . . . . . . d . . . . . . 
-            . . . 6 6 9 d 9 6 6 . . . 
-            . . . 6 6 6 9 6 6 6 . . . 
-            . . . 6 6 6 9 6 6 6 . . . 
-            . . . d 6 6 6 6 6 d . . . 
-            . . . . 6 6 6 6 6 . . . . 
-            . . . . 6 6 . 6 6 . . . . 
-            . . . . 6 6 . 6 6 . . . . 
+            . . . 2 2 4 d 4 2 2 . . . 
+            . . . 2 2 2 4 2 2 2 . . . 
+            . . . 2 2 2 2 2 2 2 . . . 
+            . . . d 2 2 2 2 2 d . . . 
+            . . . . 2 2 2 2 2 . . . . 
+            . . . . 2 2 . 2 2 . . . . 
+            . . . . 2 2 . 2 2 . . . . 
             . . . . f f . f f . . . . 
             `)
     }
@@ -303,13 +306,13 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . d d d d . . . 
             . . . . . . d d d d . . . 
             4 4 4 4 . . . . d . . . . 
-            . . d 6 6 6 6 9 d 9 6 6 . 
-            . . 4 . . . 6 6 9 6 6 6 . 
-            . . . . . . 6 6 9 6 6 6 . 
-            . . . . . . 6 6 6 6 6 d . 
-            . . . . . . 6 6 6 6 6 . . 
-            . . . . . . 6 6 . 6 6 . . 
-            . . . . . . 6 6 . 6 6 . . 
+            . . d 2 2 2 2 4 d 4 2 2 . 
+            . . 4 . . . 2 2 4 2 2 2 . 
+            . . . . . . 2 2 2 2 2 2 . 
+            . . . . . . 2 2 2 2 2 d . 
+            . . . . . . 2 2 2 2 2 . . 
+            . . . . . . 2 2 . 2 2 . . 
+            . . . . . . 2 2 . 2 2 . . 
             . . . . . . f f . f f . . 
             `)
         if (0 < info.score()) {
@@ -348,20 +351,24 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . d d d d . . . . . 
             . . . . d d d d . . . . . 
             . . . . . . d . . . . . . 
-            . . . 6 6 9 d 9 6 6 . . . 
-            . . . 6 6 6 9 6 6 6 . . . 
-            . . . 6 6 6 9 6 6 6 . . . 
-            . . . d 6 6 6 6 6 d . . . 
-            . . . . 6 6 6 6 6 . . . . 
-            . . . . 6 6 . 6 6 . . . . 
-            . . . . 6 6 . 6 6 . . . . 
+            . . . 2 2 4 d 4 2 2 . . . 
+            . . . 2 2 2 4 2 2 2 . . . 
+            . . . 2 2 2 2 2 2 2 . . . 
+            . . . d 2 2 2 2 2 d . . . 
+            . . . . 2 2 2 2 2 . . . . 
+            . . . . 2 2 . 2 2 . . . . 
+            . . . . 2 2 . 2 2 . . . . 
             . . . . f f . f f . . . . 
             `)
     }
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.mobBoss, function (sprite, otherSprite) {
+    closingSpeech()
+    game.over(true)
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
-    statusbar.value += -20
     projectile.destroy()
+    statusbar.value += -20
 })
 function getOutOfCar () {
     exposition()
@@ -420,13 +427,13 @@ function getOutOfCar () {
         . . . . . d d d d . . . . 
         . . . . . d d d d . . . . 
         . . . . . . d . . . . . . 
-        . . . 6 6 9 d 9 6 6 . . . 
-        . . . 6 6 6 9 6 6 6 . . . 
-        . . . 6 6 6 9 6 6 6 . . . 
-        . . . d 6 6 6 6 6 d . . . 
-        . . . . 6 6 6 6 6 . . . . 
-        . . . . 6 6 . 6 6 . . . . 
-        . . . . 6 6 . 6 6 . . . . 
+        . . . 2 2 4 d 4 2 2 . . . 
+        . . . 2 2 2 4 2 2 2 . . . 
+        . . . 2 2 2 2 2 2 2 . . . 
+        . . . d 2 2 2 2 2 d . . . 
+        . . . . 2 2 2 2 2 . . . . 
+        . . . . 2 2 . 2 2 . . . . 
+        . . . . 2 2 . 2 2 . . . . 
         . . . . f f . f f . . . . 
         `, SpriteKind.Player)
     bulletList.push(mySprite)
@@ -435,7 +442,7 @@ function getOutOfCar () {
     controller.moveSprite(mySprite, 100, 0)
     scene.cameraFollowSprite(mySprite)
     statusbar = statusbars.create(4, 50, StatusBarKind.Health)
-    statusbar.value = 100
+    statusbar.value = 200
     statusbar.setColor(7, 2)
     statusbar.setOffsetPadding(2, 2)
     statusbar.positionDirection(CollisionDirection.Left)
@@ -492,7 +499,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile25`, function (sprite, 
     crabBar2 = statusbars.create(100, 4, StatusBarKind.crabBar)
     crabBar2.setColor(2, 15)
     crabBar2.positionDirection(CollisionDirection.Top)
-    crabBar2.value = 100
+    crabBar2.value = 500
+    crabBar2.setLabel("Mega CraV")
+    megaCrav.setStayInScreen(false)
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
@@ -504,13 +513,13 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . d d d d . . . . . 
         . . . . . . . d d d d . . . . . 
         . . . . . . . . . d . . . . . . 
-        . . . . . . 6 6 9 d 9 6 6 . . . 
-        . . . . . . 6 6 6 9 6 6 6 . . . 
-        . . . . . . 6 6 6 9 6 6 6 . . . 
-        . . . . . . d 6 6 6 6 6 d . . . 
-        . . . . . . . 6 6 6 6 6 . . . . 
-        . . . . . . . 6 6 . 6 6 . . . . 
-        . . . . . . . 6 6 . 6 6 . . . . 
+        . . . . . . 2 2 4 d 4 2 2 . . . 
+        . . . . . . 2 2 2 4 2 2 2 . . . 
+        . . . . . . 2 2 2 2 2 2 2 . . . 
+        . . . . . . d 2 2 2 2 2 d . . . 
+        . . . . . . . 2 2 2 2 2 . . . . 
+        . . . . . . . 2 2 . 2 2 . . . . 
+        . . . . . . . 2 2 . 2 2 . . . . 
         . . . . . . . f f . f f . . . . 
         `)
     facing = 1
@@ -543,6 +552,12 @@ function level3 () {
         `, SpriteKind.mobBoss)
     mobBoss2.setPosition(308, 120)
 }
+scene.onOverlapTile(SpriteKind.MegaCrav, assets.tile`myTile26`, function (sprite, location) {
+    megaCrav.vx = 20
+    if (crab == 0) {
+        megaCrav.vx = 50
+    }
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile29`, function (sprite, location) {
     mySprite.vy += -400
 })
@@ -609,19 +624,18 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . d d d d . . . . 
         . . . . . d d d d . . . . 
         . . . . . . d . . . . . . 
-        . . . 6 6 9 d 9 6 6 . . . 
-        . . . 6 6 6 9 6 6 6 . . . 
-        . . . 6 6 6 9 6 6 6 . . . 
-        . . . d 6 6 6 6 6 d . . . 
-        . . . . 6 6 6 6 6 . . . . 
-        . . . . 6 6 . 6 6 . . . . 
-        . . . . 6 6 . 6 6 . . . . 
+        . . . 2 2 4 d 4 2 2 . . . 
+        . . . 2 2 2 4 2 2 2 . . . 
+        . . . 2 2 2 2 2 2 2 . . . 
+        . . . d 2 2 2 2 2 d . . . 
+        . . . . 2 2 2 2 2 . . . . 
+        . . . . 2 2 . 2 2 . . . . 
+        . . . . 2 2 . 2 2 . . . . 
         . . . . f f . f f . . . . 
         `)
     facing = 0
 })
 function closingSpeech () {
-    game.splash("He was not killed,", "only wounded.")
     game.splash("Agent Blonde arrested", "the crime boss.")
     game.splash("His men also surrendered", "when police arrived.")
     game.splash("The region became much", "safer as a result.")
@@ -635,17 +649,8 @@ statusbars.onZero(StatusBarKind.thug_1, function (status) {
     thugBar1.spriteAttachedTo().destroy(effects.fire, 500)
     list.shift()
 })
-scene.onOverlapTile(SpriteKind.Player, img`myTile7`, function (sprite, location) {
-    getOutOfCar()
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.explosion, function (sprite, otherSprite) {
     statusbar.value += -20
-})
-scene.onOverlapTile(SpriteKind.MegaCrav, img`myTile34`, function (sprite, location) {
-    megaCrav.vx = -20
-    if (crab == 2) {
-        megaCrav.vx = -50
-    }
 })
 statusbars.onZero(StatusBarKind.crabBar, function (status) {
     scene.cameraShake(4, 2000)
@@ -685,12 +690,6 @@ scene.onHitWall(SpriteKind.slamAttack, function (sprite, location) {
     pause(50)
     megaCrav.setKind(SpriteKind.MegaCrav)
     megaCrav.vx = -20
-})
-scene.onOverlapTile(SpriteKind.MegaCrav, img`myTile30`, function (sprite, location) {
-    megaCrav.vx = 20
-    if (crab == 2) {
-        megaCrav.vx = 50
-    }
 })
 function spawnThugs1 () {
     info.player2.setScore(3)
@@ -822,50 +821,6 @@ function spawnThugs1 () {
         `, SpriteKind.badThug)
     thug61.setPosition(528, 217)
 }
-sprites.onOverlap(SpriteKind.blondeProjectile, SpriteKind.mobBoss, function (sprite, otherSprite) {
-    sprite.destroy()
-    tiles.setTilemap(tilemap`level14`)
-    statusbar.setColor(2, 15)
-    mobBoss2.setImage(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . f f f f . . . . . . . 
-        . . . . f f f f f f . . . . . . 
-        . . . . . f f f f . . . . . . . 
-        . . . . f f f f f . . . . . . . 
-        . . . f . f f f f . . f . . . . 
-        . . . f . f f f f . . f . . . . 
-        . . . f . . . f . . . f . . . . 
-        . . . . f f f f f f f . . . . . 
-        . . . . . f f f f f . . . . . . 
-        . . . . . f f f f f . . . . . . 
-        . . . . . f f f f f . . . . . . 
-        . . . . . f f f f f . . . . . . 
-        . . . . . f f . f f . . . . . . 
-        . . . . . f f . f f . . . . . . 
-        . . . . . f f . f f . . . . . . 
-        `)
-    mySprite.setImage(img`
-        . . . . . . . . . . . . . 
-        . . . f f f f . . . . . . 
-        . . f f f f f . . . . . . 
-        . . f f f f f . . . . . . 
-        . . f f f f f f . . . . . 
-        . . . f f f f . . . . . . 
-        . . . f f f f . . . . . . 
-        . . . . f . . . . f f f f 
-        . f f f f f f f f f f . . 
-        . f f f f f f . . . f . . 
-        . f f f f f f . . . . . . 
-        . f f f f f f . . . . . . 
-        . . f f f f f . . . . . . 
-        . . f f . f f . . . . . . 
-        . . f f . f f . . . . . . 
-        . . f f . f f . . . . . . 
-        `)
-    pause(2000)
-    closingSpeech()
-    game.over(true)
-})
 function slam () {
     megaCrav.setVelocity(0, 100)
     pause(100)
@@ -873,8 +828,11 @@ function slam () {
     pause(2000)
     megaCrav.ay = 200
 }
-scene.onOverlapTile(SpriteKind.MegaCrav, assets.tile`myTile25`, function (sprite, location) {
-    tiles.setTilemap(tilemap`level15`)
+scene.onOverlapTile(SpriteKind.MegaCrav, assets.tile`myTile34`, function (sprite, location) {
+    megaCrav.vx = -20
+    if (crab == 2) {
+        megaCrav.vx = -50
+    }
 })
 scene.onHitWall(SpriteKind.fireball, function (sprite, location) {
     boom = sprites.create(img`
@@ -918,11 +876,16 @@ scene.onHitWall(SpriteKind.fireball, function (sprite, location) {
 })
 sprites.onOverlap(SpriteKind.blondeProjectile, SpriteKind.MegaCrav, function (sprite, otherSprite) {
     if (crab == 1) {
-        crabBar2.value += -2
+        sprite.destroy()
+        crabBar2.value += -10
     }
     if (crab == 2) {
-        crabBar2.value += -1
+        sprite.destroy()
+        crabBar2.value += -5
     }
+})
+scene.onOverlapTile(SpriteKind.MegaCrav, assets.tile`myTile33`, function (sprite, location) {
+    tiles.setTilemap(tilemap`level17`)
 })
 function exposition () {
     game.showLongText("Hello, 008. Congrats on escaping that prison.", DialogLayout.Top)
