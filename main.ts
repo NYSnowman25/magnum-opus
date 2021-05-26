@@ -12,6 +12,9 @@ namespace SpriteKind {
     export const slamAttack = SpriteKind.create()
     export const mobBoss = SpriteKind.create()
     export const smash = SpriteKind.create()
+    export const bigThug = SpriteKind.create()
+    export const shield = SpriteKind.create()
+    export const rocket = SpriteKind.create()
 }
 namespace StatusBarKind {
     export const thug_1 = StatusBarKind.create()
@@ -227,6 +230,8 @@ function monologue () {
     game.showLongText("And you've managed to get past my guards.", DialogLayout.Top)
     game.showLongText("No matter, because you won't get past this!", DialogLayout.Top)
     game.showLongText("Say hello to the Mega Crab mark V!", DialogLayout.Top)
+    game.showLongText("Also known as: The Mega CraV!", DialogLayout.Top)
+    game.showLongText("Muahhahah!", DialogLayout.Top)
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile24`, function (sprite, location) {
     level2()
@@ -562,6 +567,10 @@ function level3 () {
         `, SpriteKind.mobBoss)
     mobBoss2.setPosition(308, 120)
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.rocket, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    statusbar.value += -75
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile29`, function (sprite, location) {
     mySprite.vy += -400
 })
@@ -571,6 +580,7 @@ function level2 () {
     info.player2.changeScoreBy(1)
     escapeTruck.destroy()
     mySprite.setPosition(16, 210)
+    spawnThugs2()
 }
 statusbars.onStatusReached(StatusBarKind.crabBar, statusbars.StatusComparison.LTE, statusbars.ComparisonType.Percentage, 50, function (status) {
     megaCrav.setImage(img`
@@ -654,6 +664,10 @@ statusbars.onZero(StatusBarKind.thug_1, function (status) {
     thugBar1.spriteAttachedTo().destroy(effects.fire, 500)
     list.shift()
 })
+sprites.onOverlap(SpriteKind.blondeProjectile, SpriteKind.bigThug, function (sprite, otherSprite) {
+    sprite.destroy()
+    bigThugBar1.value += -30
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.explosion, function (sprite, otherSprite) {
     statusbar.value += -20
 })
@@ -686,45 +700,28 @@ statusbars.onZero(StatusBarKind.crabBar, function (status) {
 function spawnThugs2 () {
     bigThug1 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
-        . . . . . . 2 2 2 2 . . . . . . 
-        . . . . . . 2 d d d 2 . . . . . 
+        . . . . . . c c c c c . . . . . 
+        . . . . c c c c c c c c c . . . 
         . . . . . . d d d d 2 . . . . . 
         . . . . . d d f 1 d 2 . . . . . 
-        . . . . . . d d d d . . . . . . 
-        . . . . . . d d d d . . . . . . 
-        . . . . . . . . d . . . . . . . 
-        . . d f f f 7 5 d 5 7 f . . . . 
-        . . . . . . f 7 5 7 f f . . . . 
-        . . . . . . f 7 5 7 f f . . . . 
-        . . . . . . f f 7 f f d . . . . 
-        . . . . . . f f f f f . . . . . 
-        . . . . . . f f . f f . . . . . 
-        . . . . . . f f . f f . . . . . 
+        f a . . . . d d d d . . . . . . 
+        . f a a . . d d d d . . . . . . 
+        . f 2 a 2 a 2 a a a 6 c . . . . 
+        . f a a a a a a a 5 c . . . . . 
+        f a d c . . 6 6 d c 6 . . . . . 
+        . . . . . . 6 6 5 6 6 . . . . . 
+        . . . . . . 6 6 6 6 6 . . . . . 
+        . . . . . . 6 6 6 6 6 . . . . . 
+        . . . . . . 6 6 . 6 6 . . . . . 
+        . . . . . . 6 6 . 6 6 . . . . . 
         . . . . . . 2 2 . 2 2 . . . . . 
-        `, SpriteKind.Player)
-    bigThug1.setPosition(176, 96)
-    bigThugShield1 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . b . . . . . . . . . . . . 
-        . . b c . . . . . . . . . . . . 
-        . b e c . . . . . . . . . . . . 
-        . b e . . . . . . . . . . . . . 
-        . b e c . . . . . . . . . . . . 
-        . b c c . . . . . . . . . . . . 
-        . . b c . . . . . . . . . . . . 
-        . . b c . . . . . . . . . . . . 
-        . . . b . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
+        `, SpriteKind.bigThug)
+    bigThug1.setPosition(162, 90)
     bigThugBar1 = statusbars.create(20, 4, StatusBarKind.big_Thug_1)
     bigThugBar1.value = 150
-    bigThugBar1.setColor(5, 2)
+    bigThugBar1.setColor(4, 2)
     bigThugBar1.attachToSprite(bigThug1)
+    rocketThug = 1
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.badThug, function (sprite, otherSprite) {
     game.over(false)
@@ -1195,13 +1192,16 @@ function exposition () {
     game.showLongText("Left/Right buttons to move", DialogLayout.Bottom)
     game.showLongText("Up button to jump", DialogLayout.Bottom)
     game.showLongText("A lets you fire your weapon", DialogLayout.Bottom)
-    game.showLongText("B is to heal (only 3 are available)", DialogLayout.Bottom)
+    game.showLongText("B is to heal (if heals are available)", DialogLayout.Bottom)
     game.showLongText("Remember, take out enemies before they take out you.", DialogLayout.Bottom)
-    game.showLongText("A healthbar will indicate who's worse for wear.", DialogLayout.Bottom)
-    game.showLongText("When your bullet count hits 0, you'll reload.", DialogLayout.Bottom)
+    game.showLongText("Healthbars will indicate who's worse for wear.", DialogLayout.Bottom)
     game.showLongText("Alright, I think that's all.", DialogLayout.Top)
     game.showLongText("Good luck, 008.", DialogLayout.Top)
 }
+statusbars.onZero(StatusBarKind.big_Thug_1, function (status) {
+    bigThugBar1.spriteAttachedTo().destroy(effects.fire, 1000)
+    rocketThug = 0
+})
 function fire_ball () {
     fireBall = sprites.createProjectileFromSprite(img`
         . . . . . . . 5 5 . . . . . . . 
@@ -1344,6 +1344,7 @@ function clawSmash () {
         `)
     megaCrav.setKind(SpriteKind.MegaCrav)
 }
+let missile: Sprite = null
 let projectile: Sprite = null
 let fireBall: Sprite = null
 let boom: Sprite = null
@@ -1354,9 +1355,9 @@ let thug31: Sprite = null
 let thug21: Sprite = null
 let thug11: Sprite = null
 let score = 0
-let bigThugBar1: StatusBarSprite = null
-let bigThugShield1: Sprite = null
+let rocketThug = 0
 let bigThug1: Sprite = null
+let bigThugBar1: StatusBarSprite = null
 let mobBoss2: Sprite = null
 let crabBar2: StatusBarSprite = null
 let megaCrav: Sprite = null
@@ -1575,5 +1576,37 @@ forever(function () {
         timer.throttle("jump attack", 5000, function () {
             slam()
         })
+    }
+})
+forever(function () {
+    if (rocketThug == 1) {
+        if (sight.isInSight(
+        bigThug1,
+        mySprite,
+        200,
+        true
+        )) {
+            timer.throttle("bazooka", 4000, function () {
+                missile = sprites.createProjectileFromSprite(img`
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . 8 4 4 2 2 . . . . 
+                    . . . . . . 8 d 8 5 4 4 2 2 . . 
+                    . . . . . . . 8 4 4 2 2 . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    . . . . . . . . . . . . . . . . 
+                    `, bigThug1, -100, 0)
+                missile.setKind(SpriteKind.rocket)
+            })
+        }
     }
 })
